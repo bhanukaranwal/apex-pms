@@ -1,0 +1,11 @@
+ticker,shares,cost_basis,asset_class
+AAPL,500,150.25,equity
+MSFT,400,320.50,equity
+GOOGL,200,2800.00,equity
+AMZN,150,3200.00,equity
+NVDA,300,450.00,equity
+TSLA,250,220.00,equity
+JPM,400,145.00,equity
+V,300,225.00,equity
+JNJ,200,160.00,equity
+PG,150,140.00,equity
