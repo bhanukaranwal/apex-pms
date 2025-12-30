@@ -1,0 +1,139 @@
+application:
+  name: Apex Portfolio Management System
+  version: 1.0.0
+  environment: development
+
+database:
+  pool_size: 20
+  max_overflow: 10
+  pool_timeout: 30
+  pool_recycle: 3600
+  echo: false
+
+redis:
+  db: 0
+  max_connections: 50
+  decode_responses: false
+
+security:
+  jwt_algorithm: HS256
+  access_token_expire_minutes: 30
+  refresh_token_expire_days: 7
+  password_min_length: 12
+  require_special_char: true
+
+data_providers:
+  polygon:
+    enabled: true
+    rate_limit: 5
+    timeout: 30
+  alpha_vantage:
+    enabled: true
+    rate_limit: 5
+    timeout: 30
+  yfinance:
+    enabled: true
+    fallback: true
+
+portfolio:
+  max_positions: 10000
+  default_currency: USD
+  supported_currencies:
+    - USD
+    - EUR
+    - GBP
+    - JPY
+    - CHF
+    - CAD
+    - AUD
+  rebalancing_threshold: 0.05
+  tax_lot_method: fifo
+
+risk:
+  var_confidence_levels:
+    - 0.90
+    - 0.95
+    - 0.99
+  var_horizons:
+    - 1
+    - 5
+    - 10
+    - 20
+  monte_carlo_simulations: 10000
+  stress_scenarios:
+    - "2008_financial_crisis"
+    - "2020_covid_crash"
+    - "1987_black_monday"
+    - "2000_dotcom_bubble"
+
+optimization:
+  default_method: mean_variance
+  supported_methods:
+    - mean_variance
+    - black_litterman
+    - risk_parity
+    - hrp
+    - max_sharpe
+    - min_volatility
+  max_iterations: 1000
+  convergence_tolerance: 1e-6
+
+ml_models:
+  alpha_prediction:
+    model_type: lstm
+    lookback_period: 60
+    prediction_horizon: 30
+    retrain_frequency_days: 7
+  regime_detection:
+    model_type: hmm
+    n_regimes: 3
+    features:
+      - returns
+      - volatility
+      - volume
+  sentiment_analysis:
+    model_type: transformer
+    sources:
+      - news
+      - earnings_calls
+      - social_media
+
+compliance:
+  pre_trade_checks: true
+  post_trade_checks: true
+  position_limits:
+    max_single_position: 0.25
+    max_sector_exposure: 0.40
+    max_issuer_concentration: 0.10
+  reporting:
+    - form_pf
+    - form_adv
+    - aifmd
+
+execution:
+  brokers:
+    - interactive_brokers
+    - alpaca
+  default_broker: alpaca
+  slippage_tolerance: 0.001
+  execution_algorithms:
+    - vwap
+    - twap
+    - implementation_shortfall
+
+performance:
+  benchmark_default: SPY
+  attribution_method: brinson_fachler
+  calculation_frequency: daily
+  return_calculation: time_weighted
+
+logging:
+  level: INFO
+  format: json
+  rotation: daily
+  retention_days: 90
+
+monitoring:
+  prometheus_enabled: true
+  metrics_port: 9090
+  health_check_interval: 60
